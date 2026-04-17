@@ -297,36 +297,44 @@ function buildLevels() {
   }
 
   // ---- WORLD 1-1: ĐỒNG CỎ XANH ----
+  // Simple stepping-stone platformer, teach jump mechanics
   const w = 60, h = 16;
   const g1 = grid(w, h);
-  // Ground floor
+  // Ground floor with gaps
   for (let x = 0; x < w; x++) { g1[h-1][x] = 3; g1[h-2][x] = 2; }
-  // Gaps
-  for (let x = 7; x <= 8; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
-  for (let x = 20; x <= 22; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
-  for (let x = 42; x <= 44; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
-  // Platforms
-  place(g1, '######', 10, 10);
-  place(g1, 'GGGGGG', 10, 9);
-  place(g1, 'GGGGG', 26, 10);
-  place(g1, '#GGGGG#', 26, 9);
-  place(g1, '#GGGGG#', 26, 8);
-  place(g1, 'GGGGGG', 40, 10);
-  place(g1, 'GGGGGG', 40, 9);
-  place(g1, '#####', 52, 11);
-  place(g1, 'GGGGG', 52, 10);
-  place(g1, '#GGGGG#', 52, 9);
-  // Checkpoint & goal
-  g1[12][3] = 8; // K = checkpoint marker
-  g1[8][55] = 16; // X = goal
-  // Stars
-  g1[10][12] = 6; g1[10][15] = 6;
-  g1[8][24] = 6;
-  g1[7][18] = 5; // Crystal
-  g1[10][30] = 6;
-  g1[10][42] = 6;
+  // Gaps in ground
+  for (let x = 8; x <= 10; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
+  for (let x = 20; x <= 23; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
+  for (let x = 36; x <= 38; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
+  for (let x = 48; x <= 51; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
+  // Stepping platforms: each max 3 tiles apart vertically, 3-4 tiles horizontally
+  // Step 1: low platform over first gap
+  for (let x = 7; x <= 11; x++) g1[12][x] = 2; // row 12 = 1 tile above ground
+  // Step 2: over second gap
+  for (let x = 19; x <= 24; x++) g1[12][x] = 2;
+  // Step 3: ascending path
+  for (let x = 14; x <= 17; x++) g1[11][x] = 2; // 2 tiles up
+  // Step 4: high path over ground
+  for (let x = 27; x <= 30; x++) g1[11][x] = 2;
+  for (let x = 32; x <= 35; x++) g1[10][x] = 2; // 1 more tile up
+  // Step 5: over third gap
+  for (let x = 35; x <= 39; x++) g1[12][x] = 2;
+  // Step 6: upper path
+  for (let x = 42; x <= 45; x++) g1[11][x] = 2;
+  for (let x = 47; x <= 52; x++) g1[12][x] = 2; // back down over gap
+  // Final platform to goal
+  for (let x = 53; x <= 58; x++) g1[11][x] = 2;
+  // Checkpoint at start
+  g1[12][4] = 8;
+  // Goal near end
+  g1[10][56] = 16;
+  // Stars on platforms
+  g1[11][9] = 6; g1[11][21] = 6; g1[10][28] = 6; g1[9][33] = 6;
+  g1[11][43] = 6; g1[11][49] = 6;
+  // Crystal as reward
+  g1[10][34] = 5;
   // Player start
-  g1[13][1] = 20;
+  g1[13][2] = 20;
 
   const lvl1 = {
     name: 'Đồng Cỏ Xanh', world: '1-1',
@@ -341,30 +349,41 @@ function buildLevels() {
   };
 
   // ---- WORLD 1-2: HANG ĐỘNG PHA LÊ ----
+  // More gaps, moving platforms, tighter jumps
   const w2 = 65, h2 = 16;
   const g2 = grid(w2, h2);
+  // Ground with more gaps
   for (let x = 0; x < w2; x++) { g2[h2-1][x] = 3; g2[h2-2][x] = 2; }
-  for (let x = 10; x <= 12; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
-  for (let x = 30; x <= 32; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
-  for (let x = 48; x <= 50; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
-  // Platforms
-  place(g2, '#####', 12, 10); place(g2, '#GGGGG#', 12, 9);
-  place(g2, '#####', 28, 10); place(g2, '#GGGGG#', 28, 9);
-  place(g2, '####', 45, 10); place(g2, '#DDD#', 45, 9); place(g2, '#GGG#', 45, 8);
-  place(g2, '##', 37, 11);
-  place(g2, '#####', 55, 11); place(g2, '#GGGGG#', 55, 10); place(g2, '#GGGG#', 55, 9);
+  for (let x = 7; x <= 10; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
+  for (let x = 18; x <= 22; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
+  for (let x = 32; x <= 36; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
+  for (let x = 44; x <= 48; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
+  for (let x = 56; x <= 60; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
+  // Stepping platforms over gaps
+  for (let x = 6; x <= 11; x++) g2[12][x] = 2;
+  for (let x = 12; x <= 15; x++) g2[11][x] = 2;
+  for (let x = 17; x <= 23; x++) g2[12][x] = 2;
+  for (let x = 24; x <= 27; x++) g2[11][x] = 2;
+  for (let x = 28; x <= 31; x++) g2[10][x] = 2;
+  for (let x = 31; x <= 37; x++) g2[12][x] = 2;
+  for (let x = 38; x <= 41; x++) g2[11][x] = 2;
+  for (let x = 43; x <= 49; x++) g2[12][x] = 2;
+  for (let x = 50; x <= 53; x++) g2[11][x] = 2;
+  for (let x = 55; x <= 63; x++) g2[12][x] = 2;
+  // Upper path with crystals
+  for (let x = 15; x <= 18; x++) g2[9][x] = 2;
+  for (let x = 38; x <= 42; x++) g2[9][x] = 2;
   // Crystals & stars
-  g2[7][15] = 5; g2[7][30] = 5; g2[7][45] = 5;
-  g2[10][20] = 6;
-  g2[11][10] = 6;
-  g2[11][55] = 6;
+  g2[8][16] = 5; g2[8][40] = 5;
+  g2[11][9] = 6; g2[11][20] = 6; g2[10][29] = 6;
+  g2[11][39] = 6; g2[11][51] = 6; g2[11][60] = 6;
   // Spring
-  g2[12][40] = 13;
+  g2[11][35] = 13;
   // Checkpoint & goal
-  g2[12][3] = 8;
-  g2[11][60] = 16;
+  g2[12][4] = 8;
+  g2[11][62] = 16;
   // Player start
-  g2[13][1] = 20;
+  g2[13][2] = 20;
 
   const lvl2 = {
     name: 'Hang Động Pha Lê', world: '1-2',
@@ -383,37 +402,49 @@ function buildLevels() {
   };
 
   // ---- WORLD 1-3: ĐỈNH CÂY CỔ THỤ ----
+  // Hard: many gaps, boss at end, tight platform chains
   const w3 = 70, h3 = 16;
   const g3 = grid(w3, h3);
+  // Ground with many gaps
   for (let x = 0; x < w3; x++) { g3[h3-1][x] = 3; g3[h3-2][x] = 2; }
-  for (let x = 8; x <= 10; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  for (let x = 22; x <= 24; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  for (let x = 38; x <= 40; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  for (let x = 52; x <= 54; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  // Platforms
-  place(g3, '####', 10, 10); place(g3, '#GGGG#', 10, 9);
-  place(g3, '######', 24, 10); place(g3, '#GGGGGG#', 24, 9);
-  place(g3, '###', 38, 10); place(g3, '#GGG#', 38, 9);
-  place(g3, '#####', 50, 11); place(g3, '#GGGGG#', 50, 10);
-  place(g3, '##', 56, 8); place(g3, '#GG#', 56, 7);
-  place(g3, '####', 62, 11); place(g3, '#GGGG#', 62, 10);
-  // Boss area
-  g3[7][65] = 21; // @ = boss marker
+  for (let x = 6; x <= 9; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
+  for (let x = 16; x <= 20; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
+  for (let x = 26; x <= 30; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
+  for (let x = 36; x <= 40; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
+  for (let x = 48; x <= 52; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
+  for (let x = 58; x <= 62; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
+  // Platform chain: gradual ascent
+  for (let x = 5; x <= 10; x++) g3[12][x] = 2;
+  for (let x = 11; x <= 14; x++) g3[11][x] = 2;
+  for (let x = 15; x <= 21; x++) g3[12][x] = 2;
+  for (let x = 21; x <= 24; x++) g3[11][x] = 2;
+  for (let x = 25; x <= 31; x++) g3[12][x] = 2;
+  for (let x = 31; x <= 34; x++) g3[11][x] = 2;
+  for (let x = 35; x <= 41; x++) g3[12][x] = 2;
+  for (let x = 41; x <= 44; x++) g3[11][x] = 2;
+  for (let x = 45; x <= 48; x++) g3[10][x] = 2; // higher
+  for (let x = 47; x <= 53; x++) g3[12][x] = 2;
+  // Boss platform: wide area
+  for (let x = 57; x <= 68; x++) g3[12][x] = 2;
+  for (let x = 60; x <= 67; x++) g3[11][x] = 2; // upper boss platform
+  // Spikes on some platforms
+  g3[11][28] = 4; g3[11][29] = 4;
+  g3[11][42] = 4;
   // Crystals & gems
-  g3[7][12] = 5; g3[7][57] = 5;
-  g3[10][18] = 6; g3[10][32] = 6;
-  g3[11][42] = 12; // Gem big
-  g3[11][10] = 6;
+  g3[10][12] = 5; g3[10][45] = 5;
+  g3[11][7] = 6; g3[11][17] = 6; g3[11][22] = 6;
+  g3[11][32] = 6; g3[11][43] = 6; g3[11][50] = 6;
+  g3[10][64] = 12; // Big gem near boss
   // Spring
-  g3[12][45] = 13;
-  // Spikes in some areas
-  g3[13][28] = 4; g3[13][29] = 4;
-  g3[13][48] = 4;
-  // Checkpoint & goal
-  g3[12][3] = 8;
-  g3[8][66] = 16;
+  g3[11][38] = 13;
+  // Checkpoint
+  g3[12][4] = 8;
+  // Boss near end
+  g3[10][65] = 21;
+  // Goal behind boss
+  g3[11][68] = 16;
   // Player start
-  g3[13][1] = 20;
+  g3[13][2] = 20;
 
   const lvl3 = {
     name: 'Đỉnh Cây Cổ Thụ', world: '1-3',
@@ -559,7 +590,7 @@ function update() {
   player.jumpBuffer--;
 
   if (player.jumpBuffer > 0 && player.coyoteTime > 0) {
-    player.vy = -10.5;
+    player.vy = -12.5; // max jump ~4 tiles
     player.jumpBuffer = 0;
     player.coyoteTime = 0;
     player.onGround = false;
@@ -684,7 +715,8 @@ function resolveCollision(entity, axis) {
   for (let ty = top; ty <= bottom; ty++) {
     for (let tx = left; tx <= right; tx++) {
       const t = getTile(tx, ty);
-      if (t === T.GROUND || t === T.GRASS || t === T.DIRT || t === T.BRICK) {
+      // Solid tiles: GROUND, DIRT, BRICK — block from all sides
+      if (t === T.GROUND || t === T.DIRT || t === T.BRICK) {
         if (axis === 'x') {
           if (entity.vx > 0) entity.x = tx * TILE - entity.w;
           else if (entity.vx < 0) entity.x = (tx + 1) * TILE;
@@ -697,6 +729,18 @@ function resolveCollision(entity, axis) {
           } else if (entity.vy < 0) {
             entity.y = (ty + 1) * TILE;
             entity.vy = 0;
+          }
+        }
+      }
+      // One-way platform: GRASS — only land on top, pass through from below
+      if (t === T.GRASS) {
+        if (axis === 'y' && entity.vy >= 0) {
+          // Only collide when falling or standing — check feet are above platform top
+          const feetPrev = entity.y + entity.h - entity.vy; // feet position before this frame
+          if (feetPrev <= ty * TILE + 4) { // was above or at the top edge
+            entity.y = ty * TILE - entity.h;
+            entity.vy = 0;
+            entity.onGround = true;
           }
         }
       }
