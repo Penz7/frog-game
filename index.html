@@ -728,6 +728,7 @@ function resolveCollision(entity, axis) {
             entity.y = platformTop - entity.h;
             entity.vy = 0;
             entity.onGround = true;
+            console.log(`[Platform] Landed on GRASS at tile (${tx},${ty}) | prevFeetY:${prevFeetY.toFixed(1)} feetY:${feetY.toFixed(1)} platformTop:${platformTop}`);
           }
         }
       }
