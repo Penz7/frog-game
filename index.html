@@ -715,18 +715,16 @@ function resolveCollision(entity, axis) {
       }
       // One-way platform: GRASS — pass through from below, land when falling onto top
       if (t === T.GRASS) {
-        if (axis === 'y' && entity.vy >= 0) {
+        if (axis === 'y' && entity.vy >= 0 && !entity.onGround) {
           const feetY = entity.y + entity.h;
           const platformTop = ty * TILE;
-          // Only land if feet just crossed from above (not already standing on it)
-          // prevFeetY must be ABOVE platform, and feetY must be BELOW or AT platform
-          const tolerance = 2; // smaller tolerance, only catch actual crossings
+          // Only land if feet just crossed from above AND not already standing
+          const tolerance = 2;
           const crossedFromAbove = prevFeetY < platformTop && feetY >= platformTop - tolerance;
           if (crossedFromAbove) {
             entity.y = platformTop - entity.h;
             entity.vy = 0;
             entity.onGround = true;
-            console.log(`[Platform] Landed on GRASS at tile (${tx},${ty}) | prevFeetY:${prevFeetY.toFixed(1)} feetY:${feetY.toFixed(1)} platformTop:${platformTop}`);
           }
         }
       }
