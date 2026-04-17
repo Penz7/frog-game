@@ -301,32 +301,32 @@ function buildLevels() {
   // ---- WORLD 1-1: ĐỒNG CỎ XANH ----
   const w = 60, h = 16;
   const g1 = grid(w, h);
-  // Ground floor with gaps — wider gaps for difficulty
-  for (let x = 0; x < w; x++) { g1[h-1][x] = 3; g1[h-2][x] = 2; }
-  // Gaps: remove row 14 only, row 15 stays as safety floor
+  // Main ground at row 14 (h-2) - no safety floor below
+  for (let x = 0; x < w; x++) { g1[h-2][x] = 2; }
+  // Gaps: remove ground completely to create deep pits
   for (let x = 9; x <= 12; x++) g1[h-2][x] = 0; // gap 4 tiles
   for (let x = 22; x <= 26; x++) g1[h-2][x] = 0; // gap 5 tiles
   for (let x = 38; x <= 42; x++) g1[h-2][x] = 0; // gap 5 tiles
   for (let x = 50; x <= 54; x++) g1[h-2][x] = 0; // gap 5 tiles
-  // Platforms at row 12 (2 tiles above ground level) — wider gaps
-  for (let x = 6; x <= 10; x++) g1[12][x] = 2; // platform 5 tiles
-  for (let x = 18; x <= 23; x++) g1[12][x] = 2; // platform 6 tiles
-  for (let x = 34; x <= 38; x++) g1[12][x] = 2; // platform 5 tiles
-  for (let x = 46; x <= 51; x++) g1[12][x] = 2; // platform 6 tiles
+  // Platforms at row 11 (higher, easier to jump to) — wider gaps
+  for (let x = 6; x <= 10; x++) g1[11][x] = 2; // platform 5 tiles
+  for (let x = 18; x <= 23; x++) g1[11][x] = 2; // platform 6 tiles
+  for (let x = 34; x <= 38; x++) g1[11][x] = 2; // platform 5 tiles
+  for (let x = 46; x <= 51; x++) g1[11][x] = 2; // platform 6 tiles
   // Higher stepping platforms — more vertical variety
-  for (let x = 13; x <= 16; x++) g1[11][x] = 2;
-  for (let x = 28; x <= 31; x++) g1[11][x] = 2;
-  for (let x = 31; x <= 34; x++) g1[10][x] = 2; // even higher
-  for (let x = 41; x <= 44; x++) g1[11][x] = 2;
+  for (let x = 13; x <= 16; x++) g1[10][x] = 2;
+  for (let x = 28; x <= 31; x++) g1[10][x] = 2;
+  for (let x = 31; x <= 34; x++) g1[9][x] = 2; // even higher
+  for (let x = 41; x <= 44; x++) g1[10][x] = 2;
   // Final path
-  for (let x = 53; x <= 58; x++) g1[12][x] = 2;
+  for (let x = 53; x <= 58; x++) g1[11][x] = 2;
   // Checkpoint & goal
-  g1[12][4] = 8;
-  g1[10][56] = 16;
+  g1[11][4] = 8;
+  g1[9][56] = 16;
   // Stars
-  g1[11][8] = 6; g1[11][21] = 6; g1[10][30] = 6; g1[9][33] = 6;
-  g1[11][43] = 6; g1[11][49] = 6;
-  g1[10][34] = 5;
+  g1[10][8] = 6; g1[10][21] = 6; g1[9][30] = 6; g1[8][33] = 6;
+  g1[10][43] = 6; g1[10][49] = 6;
+  g1[9][34] = 5;
   g1[13][2] = 20;
 
   const lvl1 = {
@@ -344,31 +344,32 @@ function buildLevels() {
   // ---- WORLD 1-2: HANG ĐỘNG PHA LÊ ----
   const w2 = 65, h2 = 16;
   const g2 = grid(w2, h2);
-  for (let x = 0; x < w2; x++) { g2[h2-1][x] = 3; g2[h2-2][x] = 2; }
-  // Gaps: remove row 14 only, row 15 safety floor — wider gaps
+  // Main ground at row 14 (h2-2) - no safety floor below
+  for (let x = 0; x < w2; x++) { g2[h2-2][x] = 2; }
+  // Gaps: remove ground completely to create deep pits — wider gaps
   for (let x = 8; x <= 12; x++) g2[h2-2][x] = 0; // gap 5 tiles
   for (let x = 19; x <= 24; x++) g2[h2-2][x] = 0; // gap 6 tiles
   for (let x = 33; x <= 38; x++) g2[h2-2][x] = 0; // gap 6 tiles
   for (let x = 45; x <= 50; x++) g2[h2-2][x] = 0; // gap 6 tiles
   for (let x = 57; x <= 61; x++) g2[h2-2][x] = 0; // gap 5 tiles
-  // Row 12 platforms over gaps — challenging jumps
-  for (let x = 6; x <= 11; x++) g2[12][x] = 2; // platform 6 tiles
-  for (let x = 17; x <= 23; x++) g2[12][x] = 2; // platform 7 tiles
-  for (let x = 30; x <= 36; x++) g2[12][x] = 2; // platform 7 tiles
-  for (let x = 41; x <= 47; x++) g2[12][x] = 2; // platform 7 tiles
-  for (let x = 54; x <= 61; x++) g2[12][x] = 2; // platform 8 tiles
-  // Higher platforms (row 11, 10) — more vertical challenge
-  for (let x = 12; x <= 15; x++) g2[11][x] = 2;
-  for (let x = 24; x <= 27; x++) g2[11][x] = 2;
-  for (let x = 27; x <= 31; x++) g2[10][x] = 2;
-  for (let x = 38; x <= 41; x++) g2[11][x] = 2;
-  for (let x = 49; x <= 53; x++) g2[11][x] = 2;
-  g2[10][16] = 5; g2[10][40] = 5;
-  g2[11][9] = 6; g2[11][21] = 6; g2[10][29] = 6;
-  g2[11][39] = 6; g2[11][51] = 6; g2[11][60] = 6;
-  g2[11][35] = 13;
-  g2[12][4] = 8;
-  g2[10][62] = 16;
+  // Row 11 platforms over gaps — challenging jumps
+  for (let x = 6; x <= 11; x++) g2[11][x] = 2; // platform 6 tiles
+  for (let x = 17; x <= 23; x++) g2[11][x] = 2; // platform 7 tiles
+  for (let x = 30; x <= 36; x++) g2[11][x] = 2; // platform 7 tiles
+  for (let x = 41; x <= 47; x++) g2[11][x] = 2; // platform 7 tiles
+  for (let x = 54; x <= 61; x++) g2[11][x] = 2; // platform 8 tiles
+  // Higher platforms (row 10, 9) — more vertical challenge
+  for (let x = 12; x <= 15; x++) g2[10][x] = 2;
+  for (let x = 24; x <= 27; x++) g2[10][x] = 2;
+  for (let x = 27; x <= 31; x++) g2[9][x] = 2;
+  for (let x = 38; x <= 41; x++) g2[10][x] = 2;
+  for (let x = 49; x <= 53; x++) g2[10][x] = 2;
+  g2[9][16] = 5; g2[9][40] = 5;
+  g2[10][9] = 6; g2[10][21] = 6; g2[9][29] = 6;
+  g2[10][39] = 6; g2[10][51] = 6; g2[10][60] = 6;
+  g2[10][35] = 13;
+  g2[11][4] = 8;
+  g2[9][62] = 16;
   g2[13][2] = 20;
 
   const lvl2 = {
@@ -390,38 +391,39 @@ function buildLevels() {
   // ---- WORLD 1-3: ĐỈNH CÂY CỔ THỤ ----
   const w3 = 70, h3 = 16;
   const g3 = grid(w3, h3);
-  for (let x = 0; x < w3; x++) { g3[h3-1][x] = 3; g3[h3-2][x] = 2; }
-  // Gaps: remove row 14 only, row 15 safety floor — very wide gaps
+  // Main ground at row 14 (h3-2) - no safety floor below
+  for (let x = 0; x < w3; x++) { g3[h3-2][x] = 2; }
+  // Gaps: remove ground completely to create deep pits — very wide gaps
   for (let x = 7; x <= 12; x++) g3[h3-2][x] = 0; // gap 6 tiles
   for (let x = 18; x <= 23; x++) g3[h3-2][x] = 0; // gap 6 tiles
   for (let x = 27; x <= 33; x++) g3[h3-2][x] = 0; // gap 7 tiles
   for (let x = 37; x <= 43; x++) g3[h3-2][x] = 0; // gap 7 tiles
   for (let x = 50; x <= 56; x++) g3[h3-2][x] = 0; // gap 7 tiles
   for (let x = 59; x <= 65; x++) g3[h3-2][x] = 0; // gap 7 tiles
-  // Row 12 platforms over gaps — minimal platforms for max difficulty
-  for (let x = 4; x <= 9; x++) g3[12][x] = 2; // platform 6 tiles
-  for (let x = 14; x <= 20; x++) g3[12][x] = 2; // platform 7 tiles
-  for (let x = 24; x <= 30; x++) g3[12][x] = 2; // platform 7 tiles
-  for (let x = 34; x <= 41; x++) g3[12][x] = 2; // platform 8 tiles
-  for (let x = 45; x <= 52; x++) g3[12][x] = 2; // platform 8 tiles
-  for (let x = 57; x <= 65; x++) g3[12][x] = 2; // platform 9 tiles
-  // Higher platforms (row 11, 10) — very vertical challenge
-  for (let x = 10; x <= 13; x++) g3[11][x] = 2;
-  for (let x = 21; x <= 24; x++) g3[11][x] = 2;
-  for (let x = 31; x <= 34; x++) g3[11][x] = 2;
-  for (let x = 42; x <= 45; x++) g3[11][x] = 2;
-  for (let x = 44; x <= 48; x++) g3[10][x] = 2; // even higher
-  for (let x = 61; x <= 68; x++) g3[11][x] = 2;
-  g3[11][28] = 4; g3[11][29] = 4;
-  g3[11][41] = 4;
-  g3[10][12] = 5; g3[10][45] = 5;
-  g3[11][7] = 6; g3[11][18] = 6; g3[11][23] = 6;
-  g3[11][33] = 6; g3[11][43] = 6; g3[11][51] = 6;
-  g3[10][64] = 12;
-  g3[11][38] = 13;
-  g3[12][4] = 8;
-  g3[10][65] = 21;
-  g3[11][68] = 16;
+  // Row 11 platforms over gaps — minimal platforms for max difficulty
+  for (let x = 4; x <= 9; x++) g3[11][x] = 2; // platform 6 tiles
+  for (let x = 14; x <= 20; x++) g3[11][x] = 2; // platform 7 tiles
+  for (let x = 24; x <= 30; x++) g3[11][x] = 2; // platform 7 tiles
+  for (let x = 34; x <= 41; x++) g3[11][x] = 2; // platform 8 tiles
+  for (let x = 45; x <= 52; x++) g3[11][x] = 2; // platform 8 tiles
+  for (let x = 57; x <= 65; x++) g3[11][x] = 2; // platform 9 tiles
+  // Higher platforms (row 10, 9) — very vertical challenge
+  for (let x = 10; x <= 13; x++) g3[10][x] = 2;
+  for (let x = 21; x <= 24; x++) g3[10][x] = 2;
+  for (let x = 31; x <= 34; x++) g3[10][x] = 2;
+  for (let x = 42; x <= 45; x++) g3[10][x] = 2;
+  for (let x = 44; x <= 48; x++) g3[9][x] = 2; // even higher
+  for (let x = 61; x <= 68; x++) g3[10][x] = 2;
+  g3[10][28] = 4; g3[10][29] = 4;
+  g3[10][41] = 4;
+  g3[9][12] = 5; g3[9][45] = 5;
+  g3[10][7] = 6; g3[10][18] = 6; g3[10][23] = 6;
+  g3[10][33] = 6; g3[10][43] = 6; g3[10][51] = 6;
+  g3[9][64] = 12;
+  g3[10][38] = 13;
+  g3[11][4] = 8;
+  g3[9][65] = 21;
+  g3[10][68] = 16;
   g3[13][2] = 20;
 
   const lvl3 = {
@@ -539,6 +541,10 @@ function update() {
   if (gameState !== 'playing') return;
   const dt = 1;
 
+  // Track position BEFORE movement for collision detection
+  const prevX = player.x;
+  const prevY = player.y;
+
   // -- Player input --
   const moveSpeed = 3.5;
   const accel = 0.4;
@@ -568,7 +574,7 @@ function update() {
   player.jumpBuffer--;
 
   if (player.jumpBuffer > 0 && player.coyoteTime > 0) {
-    player.vy = -12.5; // max jump ~4 tiles
+    player.vy = -14.0; // increased jump height for wider gaps
     player.jumpBuffer = 0;
     player.coyoteTime = 0;
     player.onGround = false;
@@ -581,7 +587,7 @@ function update() {
   }
 
   // Track feet position BEFORE applying velocity
-  prevFeetY = player.y + player.h;
+  prevFeetY = prevY + player.h;
 
   // Gravity
   player.vy += GRAVITY;
@@ -717,14 +723,15 @@ function resolveCollision(entity, axis) {
       if (t === T.GRASS && axis === 'y') {
         const feetY = entity.y + entity.h;
         const platformTop = ty * TILE;
-        const tolerance = 4; // allow small margin
+        const tolerance = 8; // increased tolerance for easier landing
 
-        // Landing condition: falling DOWN (vy > 0), feet crossed from above
-        const isFalling = entity.vy > 0;
-        const crossedFromAbove = prevFeetY < platformTop && feetY >= platformTop - tolerance;
+        // Landing condition: falling DOWN (vy >= 0) and feet crossed or reached platform
+        const isFalling = entity.vy >= 0;
+        const wasAbove = prevFeetY < platformTop + tolerance;
+        const nowAtOrBelow = feetY >= platformTop - tolerance;
 
-        // Only land if actively falling and just crossed the platform
-        if (isFalling && crossedFromAbove && !entity.onGround) {
+        // Land if falling and crossed the platform from above
+        if (isFalling && wasAbove && nowAtOrBelow && !entity.onGround) {
           entity.y = platformTop - entity.h;
           entity.vy = 0;
           entity.onGround = true;
