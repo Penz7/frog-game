@@ -187,6 +187,7 @@ const TILE = 32;
 
 // --- PLAYER ---
 let player = {};
+let prevFeetY = 0; // track feet position from previous frame
 function resetPlayer(x, y) {
   player = {
     x: x || 64, y: y || 300,
@@ -203,6 +204,7 @@ function resetPlayer(x, y) {
     dead: false,
     checkpoint: { x: x || 64, y: y || 300 }
   };
+  prevFeetY = (y || 300) + 28;
 }
 
 // --- TILE TYPES ---
@@ -602,6 +604,9 @@ function update() {
     player.vy *= 0.85;
   }
 
+  // Track feet position BEFORE applying velocity
+  prevFeetY = player.y + player.h;
+
   // Gravity
   player.vy += GRAVITY;
   if (player.vy > 12) player.vy = 12;
@@ -735,9 +740,8 @@ function resolveCollision(entity, axis) {
       // One-way platform: GRASS — only land on top, pass through from below
       if (t === T.GRASS) {
         if (axis === 'y' && entity.vy >= 0) {
-          // Only collide when falling or standing — check feet are above platform top
-          const feetPrev = entity.y + entity.h - entity.vy; // feet position before this frame
-          if (feetPrev <= ty * TILE + 4) { // was above or at the top edge
+          // Use prevFeetY (position before this frame) to check if player was above platform
+          if (prevFeetY <= ty * TILE + 4) {
             entity.y = ty * TILE - entity.h;
             entity.vy = 0;
             entity.onGround = true;
