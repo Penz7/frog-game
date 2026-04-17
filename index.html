@@ -303,12 +303,12 @@ function buildLevels() {
   const g1 = grid(w, h);
   // Ground floor with gaps
   for (let x = 0; x < w; x++) { g1[h-1][x] = 3; g1[h-2][x] = 2; }
-  // Gaps in ground (rows 14-15)
-  for (let x = 8; x <= 10; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
-  for (let x = 20; x <= 23; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
-  for (let x = 36; x <= 38; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
-  for (let x = 48; x <= 51; x++) { g1[h-1][x] = 0; g1[h-2][x] = 0; }
-  // Platforms over gaps at row 12 (2 tiles above ground)
+  // Gaps: remove row 14 only, row 15 stays as safety floor
+  for (let x = 8; x <= 10; x++) g1[h-2][x] = 0;
+  for (let x = 20; x <= 23; x++) g1[h-2][x] = 0;
+  for (let x = 36; x <= 38; x++) g1[h-2][x] = 0;
+  for (let x = 48; x <= 51; x++) g1[h-2][x] = 0;
+  // Platforms at row 12 (2 tiles above ground level) — floating high
   for (let x = 7; x <= 11; x++) g1[12][x] = 2;
   for (let x = 19; x <= 24; x++) g1[12][x] = 2;
   for (let x = 35; x <= 39; x++) g1[12][x] = 2;
@@ -345,11 +345,12 @@ function buildLevels() {
   const w2 = 65, h2 = 16;
   const g2 = grid(w2, h2);
   for (let x = 0; x < w2; x++) { g2[h2-1][x] = 3; g2[h2-2][x] = 2; }
-  for (let x = 7; x <= 10; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
-  for (let x = 18; x <= 22; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
-  for (let x = 32; x <= 36; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
-  for (let x = 44; x <= 48; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
-  for (let x = 56; x <= 60; x++) { g2[h2-1][x] = 0; g2[h2-2][x] = 0; }
+  // Gaps: remove row 14 only, row 15 safety floor
+  for (let x = 7; x <= 10; x++) g2[h2-2][x] = 0;
+  for (let x = 18; x <= 22; x++) g2[h2-2][x] = 0;
+  for (let x = 32; x <= 36; x++) g2[h2-2][x] = 0;
+  for (let x = 44; x <= 48; x++) g2[h2-2][x] = 0;
+  for (let x = 56; x <= 60; x++) g2[h2-2][x] = 0;
   // Row 12 platforms over gaps
   for (let x = 6; x <= 11; x++) g2[12][x] = 2;
   for (let x = 17; x <= 23; x++) g2[12][x] = 2;
@@ -390,12 +391,13 @@ function buildLevels() {
   const w3 = 70, h3 = 16;
   const g3 = grid(w3, h3);
   for (let x = 0; x < w3; x++) { g3[h3-1][x] = 3; g3[h3-2][x] = 2; }
-  for (let x = 6; x <= 9; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  for (let x = 16; x <= 20; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  for (let x = 26; x <= 30; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  for (let x = 36; x <= 40; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  for (let x = 48; x <= 52; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
-  for (let x = 58; x <= 62; x++) { g3[h3-1][x] = 0; g3[h3-2][x] = 0; }
+  // Gaps: remove row 14 only, row 15 safety floor
+  for (let x = 6; x <= 9; x++) g3[h3-2][x] = 0;
+  for (let x = 16; x <= 20; x++) g3[h3-2][x] = 0;
+  for (let x = 26; x <= 30; x++) g3[h3-2][x] = 0;
+  for (let x = 36; x <= 40; x++) g3[h3-2][x] = 0;
+  for (let x = 48; x <= 52; x++) g3[h3-2][x] = 0;
+  for (let x = 58; x <= 62; x++) g3[h3-2][x] = 0;
   // Row 12 platforms over gaps
   for (let x = 5; x <= 10; x++) g3[12][x] = 2;
   for (let x = 15; x <= 21; x++) g3[12][x] = 2;
