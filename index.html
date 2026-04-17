@@ -718,13 +718,11 @@ function resolveCollision(entity, axis) {
         if (axis === 'y' && entity.vy >= 0) {
           const feetY = entity.y + entity.h;
           const platformTop = ty * TILE;
-          // Allow landing if:
-          // 1. Feet crossed the platform top this frame, OR
-          // 2. Feet are within small tolerance of platform top and previously above
-          const tolerance = 4; // allow small margin for floating point errors
+          // Only land if feet just crossed from above (not already standing on it)
+          // prevFeetY must be ABOVE platform, and feetY must be BELOW or AT platform
+          const tolerance = 2; // smaller tolerance, only catch actual crossings
           const crossedFromAbove = prevFeetY < platformTop && feetY >= platformTop - tolerance;
-          const closeToPlatform = feetY >= platformTop - tolerance && feetY <= platformTop + tolerance && prevFeetY < platformTop + tolerance;
-          if (crossedFromAbove || closeToPlatform) {
+          if (crossedFromAbove) {
             entity.y = platformTop - entity.h;
             entity.vy = 0;
             entity.onGround = true;
